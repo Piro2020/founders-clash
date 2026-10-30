@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101119">
+  <meta name="description" content="20人の大学創立者が、時代を超えて激突。CPU対戦、ローカル2人対戦、5人抜きの連戦を楽しむオリジナル2D格闘ゲーム。">
+  <title>創立者列伝 — FOUNDERS CLASH</title>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="創立者列伝 — FOUNDERS CLASH">
+  <meta property="og:title" content="創立者列伝 — FOUNDERS CLASH">
+  <meta property="og:description" content="大学創立者20人が名言を必殺技に激突する、ブラウザで遊べるスト2風2D格闘ゲーム。CPU対戦・2人対戦・5人抜き。ファン創作・AI生成イラスト。">
+  <meta property="og:url" content="https://piro2020.github.io/founders-clash/">
+  <meta property="og:image" content="https://piro2020.github.io/founders-clash/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="創立者列伝 — FOUNDERS CLASH">
+  <meta name="twitter:description" content="大学創立者20人が名言を必殺技に激突する、ブラウザで遊べるスト2風2D格闘ゲーム。">
+  <meta name="twitter:image" content="https://piro2020.github.io/founders-clash/assets/og.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23f05235'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='46' font-weight='900' fill='%23f5f1e7'%3E学%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./arcade.css?v=2">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="創立者列伝 ホーム"><span class="brand-icon">學</span><span>FOUNDERS<br><b>CLASH<span class="brand-period">.</span></b></span></a>
+      <span class="header-edition">THE ACADEMIA FIGHTING TOURNAMENT <span>— EST. 2026</span></span>
+      <nav aria-label="メニュー"><button id="help-button">操作方法 <span>↗</span></button><button id="archive-button">創立者図鑑 <span>↗</span></button><button id="sound-button" class="sound-button" aria-pressed="false" aria-label="サウンドをオンにする">♪ <span>SOUND OFF</span></button></nav>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div class="hero-art" aria-hidden="true"></div>
+        <div><div class="eyebrow"><span class="live-dot"></span> 20 FOUNDERS. ONE ARENA.</div><h1 id="page-title">創立者<span>列伝</span></h1><p class="tagline">学問のすゝめ。<strong>対戦のはじまり。</strong></p></div>
+        <div class="intro-right"><span class="edition-stamp">ARCADE<br><b>EDITION 01</b></span><p>時代も、学派も、超えてゆけ。<br>20人の「知の巨人」が、いま激突する。</p><span class="intro-note">ブラウザで、すぐに開戦。 / 1–2 PLAYERS</span></div>
+      </section>
+      <section class="game-section" aria-label="対戦ゲーム">
+        <div class="arena-shell">
+          <div class="arena-topbar"><span><i></i> <b id="arena-label">BATTLE PREVIEW</b></span><span id="mode-label">1P VS CPU</span><div><button id="pause-button" aria-label="一時停止" disabled>Ⅱ</button><button id="fullscreen-button" aria-label="ゲームを全画面表示">⛶</button></div></div>
+          <div id="arena" class="arena" tabindex="0" aria-label="格闘ゲーム画面。対戦中はAとDで移動（相手と逆方向でガード）、Wでジャンプ、Sでしゃがみ、Jで弱攻撃、Kで強攻撃、Lで必殺技、Iで超必殺。">
+            <canvas id="game-canvas" width="960" height="480" aria-label="大学創立者の格闘ゲーム"></canvas>
+            <div id="asset-loading" class="asset-loading"><div><strong>FOUNDERS CLASH</strong><span id="asset-progress">肖像とステージを読み込み中…</span></div></div>
+            <div id="attract-overlay" class="attract-overlay"><span class="preview-caption">FUKUZAWA <b>VS</b> OKUMA</span><div class="preview-title">その信念を、<br><em>拳に宿せ。</em></div><span class="preview-bottom"><i></i> SELECT YOUR FOUNDER BELOW</span></div>
+            <div id="pause-overlay" class="pause-overlay" hidden><div><span class="eyebrow">TAKE A BREATH</span><h2>PAUSED</h2><button id="resume-button" class="primary-button">対戦に戻る <span>▶</span></button><button id="quit-button" class="text-button">キャラクター選択へ</button></div></div>
+            <div id="result-overlay" class="result-overlay" hidden><div><span id="result-kicker" class="eyebrow">MATCH FINISHED</span><h2 id="result-title">YOU WIN</h2><p id="result-description"></p><button id="rematch-button" class="primary-button">もう一度対戦 <span>↗</span></button><button id="result-back-button" class="text-button">キャラクター選択へ</button></div></div>
+            <span id="game-status" class="sr-only" aria-live="polite"></span>
+          </div>
+          <div class="arena-bottom"><div class="stage-tabs" role="group" aria-label="ステージ選択"><span>STAGE</span><button class="active" data-stage="0" aria-pressed="true">01 赤煉瓦の学舎</button><button data-stage="1" aria-pressed="false">02 月下の大講堂</button><button data-stage="2" aria-pressed="false">03 桜の並木道</button><button data-stage="3" aria-pressed="false">04 大講堂の熱狂</button></div><span class="pixel-indicator">ILLUSTRATED EDITION</span></div>
+        </div>
+        <aside class="fighter-panel" aria-label="選択中の創立者">
+          <div class="panel-top"><span class="player-chip">PLAYER 01</span><span id="selected-number">NO. 01 / 20</span></div>
+          <div class="fighter-identity"><span id="selected-school" class="school-name"></span><h2 id="selected-name"></h2><span id="selected-roman" class="roman-name"></span></div>
+          <div class="fighter-profile"><canvas id="selected-portrait" width="200" height="220" aria-hidden="true"></canvas><div class="stats"><div><span>POWER</span><div id="stat-power"></div></div><div><span>SPEED</span><div id="stat-speed"></div></div><div><span>REACH</span><div id="stat-reach"></div></div><span id="fighter-type" class="fighter-type"></span></div></div>
+          <div class="special-info"><span>必殺技 <b>L</b></span><strong id="selected-special"></strong><small id="selected-style"></small></div>
+          <div class="mode-options" role="group" aria-label="対戦モード"><button class="active" data-mode="cpu" aria-pressed="true">CPU対戦</button><button data-mode="versus" aria-pressed="false">2人対戦</button><button data-mode="arcade" aria-pressed="false">5人抜き</button></div>
+          <div class="setup-row"><label for="opponent-select" id="opponent-label">対戦相手</label><select id="opponent-select" aria-label="対戦相手"></select></div>
+          <div class="setup-row difficulty-row"><label for="difficulty">CPUレベル</label><select id="difficulty"><option value="easy">初級 — EASY</option><option value="normal" selected>中級 — NORMAL</option><option value="hard">上級 — HARD</option></select></div>
+          <button id="start-button" class="primary-button">対戦開始 <span>↗</span></button><p class="start-note" id="start-note">2ラウンド先取 / 99カウント / ↓↘→＋攻撃で必殺技・密着して前＋強で投げ</p>
+        </aside>
+      </section>
+      <section class="roster-section" aria-labelledby="roster-title"><div class="section-heading"><div><span class="section-number">01 /</span><h2 id="roster-title">闘う創立者を選べ。</h2><span class="roster-count">20 FIGHTERS</span></div><button id="random-button" class="random-button">⤨ おまかせで選ぶ</button></div><div id="roster" class="roster-grid"></div><div class="roster-footnote"><span><i class="tiny-square"></i> 1Pの創立者を選択。対戦相手は右のメニューから変更できます。</span><span>LEGENDS NEVER GRADUATE.</span></div></section>
+      <section class="controls-strip" aria-label="基本操作"><div class="controls-heading"><span class="section-number">02 /</span><strong>いざ、実学。</strong><span>HOW TO PLAY</span></div><div class="key-group"><span><kbd>A</kbd><kbd>D</kbd></span><small>移動・後ろでガード</small></div><div class="key-group"><kbd>W</kbd><small>ジャンプ</small></div><div class="key-group"><kbd>S</kbd><small>しゃがみ</small></div><div class="key-group"><span><kbd>J</kbd><kbd>K</kbd></span><small>弱・強攻撃</small></div><div class="key-group special-key"><kbd>L</kbd><small>必殺技</small></div><div class="key-group super-key"><kbd>I</kbd><small>超必殺</small></div><div class="key-group command-key"><span><kbd>↓↘→</kbd>＋<kbd>J</kbd></span><small>コマンド必殺</small></div><div class="key-group"><span><kbd>前</kbd>＋<kbd>K</kbd></span><small>密着で投げ</small></div><button id="controls-more">詳しい遊び方 ↗</button></section>
+    </main>
+    <footer><span>FOUNDERS CLASH <b>© 2026</b></span><p>実在の人物の肖像・言葉をもとにした非公式のファン創作です。各大学・学校法人・ご遺族とは一切関係がなく、公式作品ではありません。キャラクターイラストはAI生成で、人物描写・能力・戦闘はすべてフィクションです。権利者からのご指摘には速やかに対応します。</p><button id="sources-button">人物・名言の出典 ↗</button></footer>
+  </div>
+  <div id="touch-controls" class="touch-controls" hidden><div class="touch-move"><button data-input="left" aria-label="左へ移動">◀</button><div><button data-input="jump" aria-label="ジャンプ">▲</button><button data-input="down" aria-label="しゃがみ">▼</button></div><button data-input="right" aria-label="右へ移動">▶</button><button data-input="block" class="touch-guard" aria-label="ガード">盾</button></div><div class="touch-attacks"><button data-input="light" aria-label="弱攻撃">弱</button><button data-input="heavy" aria-label="強攻撃">強</button><button data-input="special" class="touch-special" aria-label="必殺技">必殺</button><button data-input="super" class="touch-super" aria-label="超必殺（信念ゲージ100で使用可能）" aria-disabled="true">超必殺</button></div></div>
+  <dialog id="help-dialog" aria-labelledby="help-title"><div class="dialog-heading"><div><span class="eyebrow">HOW TO PLAY</span><h2 id="help-title">学んで、闘え。</h2></div><button class="close-dialog" aria-label="閉じる">×</button></div><p>相手の体力をゼロにするか、制限時間終了時に残り体力で上回れば勝利。<strong>2ラウンド先取</strong>で決着です。</p><div class="help-grid"><div><h3>PLAYER 1</h3><dl><dt>移動</dt><dd><kbd>A</kbd> <kbd>D</kbd></dd><dt>ジャンプ / しゃがみ</dt><dd><kbd>W</kbd> <kbd>S</kbd></dd><dt>ガード</dt><dd>相手と逆方向を入力（<kbd>S</kbd>併用でしゃがみガード）</dd><dt>弱攻撃 / 強攻撃 / 必殺技</dt><dd><kbd>J</kbd> <kbd>K</kbd> <kbd>L</kbd></dd><dt>超必殺</dt><dd><kbd>I</kbd></dd></dl></div><div><h3>PLAYER 2</h3><dl><dt>移動</dt><dd><kbd>←</kbd> <kbd>→</kbd></dd><dt>ジャンプ / しゃがみ</dt><dd><kbd>↑</kbd> <kbd>↓</kbd></dd><dt>ガード</dt><dd>相手と逆方向を入力（<kbd>↓</kbd>併用でしゃがみガード）</dd><dt>弱攻撃 / 強攻撃 / 必殺技</dt><dd><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></dd><dt>超必殺</dt><dd><kbd>4</kbd></dd></dl></div></div><div class="help-tip"><b>信念ゲージを使いこなせ。</b><p>コマンド入力「↓↘→＋攻撃」で必殺技（威力アップ）。必殺技は信念ゲージを25消費、ゲージが100になれば超必殺を放てます。投げは「相手に密着して前＋強」でガード不能。しゃがみ強は足払いで相手をダウンさせ、下段はしゃがみガード、ジャンプ攻撃は立ちガードで防ぎます。弱→強→必殺はヒットかガードでつながります。</p></div><p class="help-small">Esc / P：一時停止　·　2人対戦は同じキーボードを使用します（テンキーの1〜4も可）。<br>スマホではCPU対戦・5人抜きを画面下のボタンで遊べます（▼しゃがみ・盾ガード・超必殺はゲージ100で光ります）。音は右上から切り替えられます。</p><button class="primary-button close-help">準備はできた <span>↗</span></button></dialog>
+  <dialog id="archive-dialog" aria-labelledby="archive-title"><div class="dialog-heading"><div><span class="eyebrow">THE FOUNDERS ARCHIVE</span><h2 id="archive-title">歴史の向こうの、挑戦者たち。</h2></div><button class="close-dialog" aria-label="閉じる">×</button></div><p>「大学」は現在の名称です。創立年は前身校・母体学園を含みます。必殺技名は、本人の言葉や座右銘・書に由来します。</p><div id="archive-grid" class="archive-grid"></div><p class="help-small">人物・名言には出典を記載しています。写真・肖像画を参照したキャラクターイラスト、能力、戦闘は創作です。</p></dialog>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
